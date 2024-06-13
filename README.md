@@ -41,6 +41,7 @@ get user by name
       --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO'
 
 send friend request
+
       curl --location 'http://127.0.0.1:8000/api/users/friend-request/send/' \
       --header 'Content-Type: application/json' \
       --data-raw '{
