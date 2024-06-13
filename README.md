@@ -69,6 +69,7 @@ Manage friend request
             }'
 
 List friends
+
       curl --location --request GET 'http://localhost:8000/api/users/friends/' \
       --header 'Content-Type: application/json' \
       --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO' \
