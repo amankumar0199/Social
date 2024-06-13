@@ -14,8 +14,6 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 
 User = get_user_model()
 
-
-#
 class SignUpView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -67,10 +65,10 @@ def login(request):
             return APIException(detail=err, code=500)
 
 class SendFriendRequestView(APIView):
-    # permission_classes = [IsAuthenticated]
     permission_classes = [AllowAny]
     def post(self, request, *args, **kwargs):
-        user = User.objects.get(request.user)
+        username = request.data.get("sender_username")
+        user = User.objects.get(username=username)
         receiver_email = request.data.get('receiver_email')
 
         try:
@@ -92,18 +90,16 @@ class SendFriendRequestView(APIView):
 
 
 class ManageFriendRequestView(APIView):
-    # permission_classes = [IsAuthenticated]
     permission_classes = [AllowAny]
 
-    user = User.objects.get(username='niranjan')
     def post(self, request, *args, **kwargs):
-        user = User.objects.get(username='niranjan')
-
+        username = request.data.get('username')  #provide a user for which we want to manage the friend request
+        user = User.objects.get(username=username)
         request_id = request.data.get('request_id')
         action = request.data.get('action')
         friend_request = FriendRequest.objects.get(id=request_id)
 
-        if friend_request.receiver != user:     #to change
+        if friend_request.receiver != user:
             return Response({'detail': 'Not authorized to perform this action.'}, status=status.HTTP_403_FORBIDDEN)
 
         if(friend_request.status == 'accepted'):
@@ -123,12 +119,11 @@ class ManageFriendRequestView(APIView):
 
 class ListFriendsView(APIView):
     serializer_class = UserSerializer
-
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request):
-        # user = self.request.user
-        user = User.objects.get(username='niranjan')
+        username = request.data.get('username')
+        user = User.objects.get(username=username)
         friendships = Friendship.objects.filter(Q(user1=user) | Q(user2=user))
         friend_ids = [f.user1.id if f.user2 == user else f.user2.id for f in friendships]
         friends = User.objects.filter(id__in=friend_ids)
@@ -143,7 +138,8 @@ class ListPendingFriendRequestsView(APIView):
     # permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        user = User.objects.get(username='niranjan')
+        username = request.data.get("username")
+        user = User.objects.get(username=username)
         friend_request = FriendRequest.objects.filter(receiver=user, status='pending')
         serializer = FriendRequestSerializer(friend_request, many=True)
 
