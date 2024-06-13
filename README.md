@@ -8,6 +8,7 @@ sqlparse==0.5.0
 API
 
 SignUp
+
       curl --location 'http://localhost:8000/user/signup/' \
       --header 'Content-Type: application/json' \
       --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO' \
@@ -30,49 +31,49 @@ Login
     }'
 
 Get user by email
-    
-    curl --location 'http://localhost:8000/user/getUserDetails?email=new%40gmail.com' \
+      
+      curl --location 'http://localhost:8000/user/getUserDetails?email=new%40gmail.com' \
     --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO'
 
 get user by name
-    curl --location 'http://localhost:8000/user/getUserDetails?name=ne' \
-    --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO'
+
+      curl --location 'http://localhost:8000/user/getUserDetails?name=ne' \
+      --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO'
 
 send friend request
-
-    curl --location 'http://127.0.0.1:8000/api/users/friend-request/send/' \
-    --header 'Content-Type: application/json' \
-    --data-raw '{
+      curl --location 'http://127.0.0.1:8000/api/users/friend-request/send/' \
+      --header 'Content-Type: application/json' \
+      --data-raw '{
         "sender_username":"aman",
         "receiver_email": "new@gmail.com"
         }'
 
 pending friend request
 
-    curl --location --request GET 'http://localhost:8000/api/users/friend-requests/pending/' \
-    --header 'Content-Type: application/json' \
-    --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO' \
-    --data '{
+      curl --location --request GET 'http://localhost:8000/api/users/friend-requests/pending/' \
+      --header 'Content-Type: application/json' \
+      --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO' \
+      --data '{
         "username":"newUser"
-    }'
+      }'
 
 Manage friend request
 
-    curl --location 'http://localhost:8000/api/users/friend-request/manage/' \
-    --header 'Content-Type: application/json' \
-    --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO' \
-    --data '{
-        "request_id": 10,
-        "username":"newUser",
-        "action": "accept"
-    }'
+      curl --location 'http://localhost:8000/api/users/friend-request/manage/' \
+      --header 'Content-Type: application/json' \
+      --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO' \
+      --data '{
+            "request_id": 10,
+            "username":"newUser",
+            "action": "accept"
+            }'
 
 List friends
-    curl --location --request GET 'http://localhost:8000/api/users/friends/' \
-    --header 'Content-Type: application/json' \
-    --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO' \
-    --data '{
-        "username":"newUser"
-    }'
+      curl --location --request GET 'http://localhost:8000/api/users/friends/' \
+      --header 'Content-Type: application/json' \
+      --header 'Cookie: csrftoken=pOQCL9FTJrVnoDTXCQ6XjnzmoMol0XYO' \
+      --data '{
+            "username":"newUser"
+      }'
 
 
